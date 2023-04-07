@@ -7,6 +7,6 @@ mkdir selenium
 
 wget https://chromedriver.storage.googleapis.com/111.0.5563.64/chromedriver_linux64.zip -O ./selenium/chromedriver.zip
 
-apt-get install unzip
+sudo apt-get install unzip
 
 unzip ./selenium/chromedriver.zip -d ./selenium/

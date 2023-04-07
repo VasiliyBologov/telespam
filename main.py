@@ -8,7 +8,7 @@ import time
 import pyautogui
 
 
-service = Service(executable_path="/selenium/chromedriver")
+service = Service(executable_path="./selenium/chromedriver")
 chrome_options = Options()
 chrome_options.add_experimental_option("prefs", {'protocol_handler.excluded_schemes.hcp': False})
 driver = webdriver.Chrome(service=service, chrome_options=chrome_options)
@@ -77,12 +77,9 @@ if __name__ == '__main__':
         if chat_id:
             print("chat_id: ", chat_id)
             input = driver.find_element(by=By.ID, value="editable-message-text")
-            input.send_keys("Привет, не спишь?")
+            input.send_keys("Тест тест тест")
             pyautogui.press('enter')
-            input.send_keys(f'Твой chat_id - {chat_id}')
-            pyautogui.press('enter')
-            input.send_keys(f'Через api не оч вышло а с браузера работает)')
-            pyautogui.press('enter')
+            input.send_keys(Keys.ENTER)
         else:
             print("no user with phone: ", num)
 
