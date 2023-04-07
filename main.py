@@ -7,27 +7,18 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import pyautogui
 
+import config
+
 
 service = Service(executable_path="./selenium/chromedriver")
 chrome_options = Options()
 chrome_options.add_experimental_option("prefs", {'protocol_handler.excluded_schemes.hcp': False})
 driver = webdriver.Chrome(service=service, chrome_options=chrome_options)
 
-ph_list = [
-    # "+37379755195",
-    # "+79023909904",
-    # "+37368690016",
-    "+79109137406",
-    "+37378228638",
-    # "+37378229627",
-    "+37378229628",
-    # "+37378229629", - живо    й
-    # "+37378229630",
-    # "+37378229631",
-    # "+37378229632",
-    # "+37378229633",
-    # "+37378229634",
-]
+ph_list = config.PHONES
+
+if not config.PHONES:
+    raise Exception("Пустой список телефонов!")
 
 if __name__ == '__main__':
     driver.get("https://web.telegram.org/z/")
@@ -77,8 +68,9 @@ if __name__ == '__main__':
         if chat_id:
             print("chat_id: ", chat_id)
             input = driver.find_element(by=By.ID, value="editable-message-text")
-            input.send_keys("Тест тест тест")
-            pyautogui.press('enter')
+            input.send_keys(config.MSG)
+            time.sleep(2)
+            # pyautogui.press('enter')
             input.send_keys(Keys.ENTER)
         else:
             print("no user with phone: ", num)
