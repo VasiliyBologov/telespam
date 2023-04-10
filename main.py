@@ -31,49 +31,51 @@ if __name__ == '__main__':
     time.sleep(2)
 
     for num in ph_list:
-
-        print(f"Try find {num}")
-        start_url = f"https://t.me/{num}"
-        driver.get(start_url)
-        time.sleep(2)
-        actions = ActionChains(driver)
-        pyautogui.press('enter')
-        # https://web.telegram.org/z/#?tgaddr=tg://resolve?phone=37378228638
-        # tg://resolve?phone=37378228638
-        time.sleep(3)
-
-        open_web_btn = driver.find_element(by=By.CLASS_NAME, value="tgme_action_web_button")
-        print("open_web_btn: ", open_web_btn)
-        open_web_btn.click()
-
-        i = 1
-        while driver.current_url == start_url and i < 15:
-            i += 1
+        try:
+            print(f"Try find {num}")
+            start_url = f"https://t.me/{num}"
+            driver.get(start_url)
             time.sleep(2)
+            actions = ActionChains(driver)
+            pyautogui.press('enter')
+            # https://web.telegram.org/z/#?tgaddr=tg://resolve?phone=37378228638
+            # tg://resolve?phone=37378228638
+            time.sleep(3)
 
-        if driver.current_url == start_url:
-            print("Чтото с кнопкой!!!")
-            continue
-        time.sleep(3)
+            open_web_btn = driver.find_element(by=By.CLASS_NAME, value="tgme_action_web_button")
+            print("open_web_btn: ", open_web_btn)
+            open_web_btn.click()
 
-        print("current_url: ", driver.current_url)
-        current_url = driver.current_url
+            i = 1
+            while driver.current_url == start_url and i < 15:
+                i += 1
+                time.sleep(2)
 
-        chat_id = current_url.split("#")
-        print(chat_id)
-        if len(chat_id) > 1:
-            chat_id = chat_id[-1]
-        else:
-            chat_id = None
-        if chat_id:
-            print("chat_id: ", chat_id)
-            input = driver.find_element(by=By.ID, value="editable-message-text")
-            input.send_keys(config.MSG)
-            time.sleep(2)
-            # pyautogui.press('enter')
-            input.send_keys(Keys.ENTER)
-        else:
-            print("no user with phone: ", num)
+            if driver.current_url == start_url:
+                print("Чтото с кнопкой!!!")
+                continue
+            time.sleep(3)
 
-        time.sleep(5)
-        print("-----------------------")
+            print("current_url: ", driver.current_url)
+            current_url = driver.current_url
+
+            chat_id = current_url.split("#")
+            print(chat_id)
+            if len(chat_id) > 1:
+                chat_id = chat_id[-1]
+            else:
+                chat_id = None
+            if chat_id:
+                print("chat_id: ", chat_id)
+                # input = driver.find_element(by=By.ID, value="editable-message-text")
+                # input.send_keys(config.MSG)
+                # time.sleep(2)
+                # # pyautogui.press('enter')
+                # input.send_keys(Keys.ENTER)
+            else:
+                print("no user with phone: ", num)
+
+            time.sleep(5)
+            print("-----------------------")
+        except Exception as e:
+            print("Ошибка: ", e)
